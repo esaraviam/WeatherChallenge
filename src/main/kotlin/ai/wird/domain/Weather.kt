@@ -1,0 +1,135 @@
+package ai.wird.domain
+
+import kotlinx.serialization.Serializable
+@Serializable
+data class Temperatures(
+    val timelines: Timelines,
+    val location: Location,
+)
+
+@Serializable
+data class Location(
+    val lat: Double,
+    val lon: Double,
+    val name: String,
+    val type: String,
+    val isCacheable: Boolean = false,
+)
+@Serializable
+data class Timelines(
+    val minutely: List<Hourly>,
+    val hourly: List<Hourly>,
+    val daily: List<Daily>
+)
+@Serializable
+data class Daily(
+    val time: String,
+    val values: Values
+)
+@Serializable
+data class Values(
+    val cloudBaseAvg: Double,
+    val cloudBaseMax: Double,
+    val cloudBaseMin: Double,
+    val cloudCeilingAvg: Double,
+    val cloudCeilingMax: Double,
+    val cloudCeilingMin: Double,
+    val cloudCoverAvg: Double,
+    val cloudCoverMax: Double,
+    val cloudCoverMin: Double,
+    val dewPointAvg: Double,
+    val dewPointMax: Double,
+    val dewPointMin: Double,
+    val evapotranspirationAvg: Double,
+    val evapotranspirationMax: Double,
+    val evapotranspirationMin: Double,
+    val evapotranspirationSum: Double,
+    val freezingRainIntensityAvg: Double,
+    val freezingRainIntensityMax: Double,
+    val freezingRainIntensityMin: Double,
+    val humidityAvg: Double,
+    val humidityMax: Double,
+    val humidityMin: Double,
+    val iceAccumulationAvg: Double,
+    val iceAccumulationLweAvg: Double,
+    val iceAccumulationLweMax: Double,
+    val iceAccumulationLweMin: Double,
+    val iceAccumulationLweSum: Double,
+    val iceAccumulationMax: Double,
+    val iceAccumulationMin: Double,
+    val iceAccumulationSum: Double,
+    val moonriseTime: String,
+    val moonsetTime: String,
+    val precipitationProbabilityAvg: Double,
+    val precipitationProbabilityMax: Double,
+    val precipitationProbabilityMin: Double,
+    val pressureSurfaceLevelAvg: Double,
+    val pressureSurfaceLevelMax: Double,
+    val pressureSurfaceLevelMin: Double,
+    val rainAccumulationAvg: Double,
+    val rainAccumulationLweAvg: Double,
+    val rainAccumulationLweMax: Double,
+    val rainAccumulationLweMin: Double,
+    val rainAccumulationMax: Double,
+    val rainAccumulationMin: Double,
+    val rainAccumulationSum: Double,
+    val rainIntensityAvg: Double,
+    val rainIntensityMax: Double,
+    val rainIntensityMin: Double,
+    val sleetAccumulationAvg: Double,
+    val sleetAccumulationLweAvg: Double,
+    val sleetAccumulationLweMax: Double,
+    val sleetAccumulationLweMin: Double,
+    val sleetAccumulationLweSum: Double,
+    val sleetAccumulationMax: Double,
+    val sleetAccumulationMin: Double,
+    val sleetIntensityAvg: Double,
+    val sleetIntensityMax: Double,
+    val sleetIntensityMin: Double,
+    val snowAccumulationAvg: Double,
+    val snowAccumulationLweAvg: Double,
+    val snowAccumulationLweMax: Double,
+    val snowAccumulationLweMin: Double,
+    val snowAccumulationLweSum: Double,
+    val snowAccumulationMax: Double,
+    val snowAccumulationMin: Double,
+    val snowAccumulationSum: Double,
+    val snowDepthAvg: Double? = null,
+    val snowDepthMax: Double? = null,
+    val snowDepthMin: Double? = null,
+    val snowDepthSum: Double? = null,
+    val snowIntensityAvg: Double,
+    val snowIntensityMax: Double,
+    val snowIntensityMin: Double,
+    val sunriseTime: String,
+    val sunsetTime: String,
+    val temperatureApparentAvg: Double,
+    val temperatureApparentMax: Double,
+    val temperatureApparentMin: Double,
+    val temperatureAvg: Double,
+    val temperatureMax: Double,
+    val temperatureMin: Double,
+    val uvHealthConcernAvg: Double? = null,
+    val uvHealthConcernMax: Double? = null,
+    val uvHealthConcernMin: Double? = null,
+    val uvIndexAvg: Double? = null,
+    val uvIndexMax: Double? = null,
+    val uvIndexMin: Double? = null,
+    val visibilityAvg: Double,
+    val visibilityMax: Double,
+    val visibilityMin: Double,
+    val weatherCodeMax: Double,
+    val weatherCodeMin: Double,
+    val windDirectionAvg: Double,
+    val windGustAvg: Double,
+    val windGustMax: Double,
+    val windGustMin: Double,
+    val windSpeedAvg: Double,
+    val windSpeedMax: Double,
+    val windSpeedMin: Double
+)
+@Serializable
+data class Hourly(
+    val time: String,
+    val values: Map<String, Double?>
+)
