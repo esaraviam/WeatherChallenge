@@ -1,6 +1,4 @@
-package ai.wird.service
-
-import ai.wird.domain.*
+package ai.wird.domain
 
 class WeatherMockService {
 
