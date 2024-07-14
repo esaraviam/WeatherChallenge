@@ -2,7 +2,7 @@ package ai.wird.service
 
 import ai.wird.domain.*
 
-class TemperatureService {
+class WeatherMockService {
 
     private fun createValues(): Values {
         return Values(
