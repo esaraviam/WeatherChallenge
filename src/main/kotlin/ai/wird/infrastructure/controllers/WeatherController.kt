@@ -8,7 +8,7 @@ class WeatherController(private val getWeatherUseCase: GetWeatherUseCase) {
 
     suspend fun getWeather(city: Location): WeatherResult {
         return try {
-            val weatherData = getWeatherUseCase.execute(city.name)
+            val weatherData = city.name?.let { getWeatherUseCase.execute(it) }
             WeatherResult(success = true, data = weatherData)
         } catch (e: Exception) {
             WeatherResult(success = false, error = e.message)

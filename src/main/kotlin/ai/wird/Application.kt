@@ -19,14 +19,23 @@ fun main() {
 
 fun Application.module() {
 
-    val cacheManager = WeatherCacheManager("redis://localhost:6379")
-    val weatherRepository = ApiWeatherRepositoryImpl(cacheManager)
+    val apiKey = System.getenv("WEATHER_API_KEY") ?: throw IllegalStateException("WEATHER_API_KEY is not set")
+    val baseUrl =
+        System.getenv("WEATHER_API_BASE_URL") ?: throw IllegalStateException("WEATHER_API_BASE_URL is not set")
+    val redisUrl = System.getenv("WEATHER_REDIS_URL") ?: throw IllegalStateException("WEATHER_REDIS_URL is not set")
+    val maxRetried =
+        System.getenv("WEATHER_MAX_RETRIES") ?: throw IllegalStateException("WEATHER_MAX_RETRIES is not set")
+    val schedulerTimePeriod =
+        System.getenv("WEATHER_TIME_PERIOD") ?: throw IllegalStateException("WEATHER_REDIS_URL is not set")
+
+    val cacheManager = WeatherCacheManager(redisUrl)
+    val weatherRepository = ApiWeatherRepositoryImpl(cacheManager, maxRetried.toInt(), apiKey, baseUrl)
     val getWeatherUseCase = GetWeatherUseCase(weatherRepository)
     val weatherController = WeatherController(getWeatherUseCase)
 
 
     configureSerialization()
     configureHTTP()
-    configureScheduler(cacheManager)
+    configureScheduler(cacheManager, maxRetried.toInt(), apiKey, baseUrl, schedulerTimePeriod.toLong())
     configureRouting(weatherController)
 }

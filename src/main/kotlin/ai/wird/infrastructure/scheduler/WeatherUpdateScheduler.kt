@@ -5,13 +5,13 @@ import ai.wird.infrastructure.repositories.ApiWeatherRepositoryImpl
 import kotlinx.coroutines.*
 import java.time.Duration
 
-class WeatherUpdateScheduler(private val weatherRepository: ApiWeatherRepositoryImpl) {
+class WeatherUpdateScheduler(private val weatherRepository: ApiWeatherRepositoryImpl, private val timePeriod: Long) {
 
     fun startWeatherUpdateTimer() {
         CoroutineScope(Dispatchers.IO).launch {
             while (isActive) {
                 updateWeatherData()
-                delay(Duration.ofMinutes(5).toMillis())
+                delay(Duration.ofMinutes(timePeriod).toMillis())
             }
         }
     }

@@ -15,20 +15,23 @@ import kotlin.random.Random
 
 class ApiWeatherRepositoryImpl(
     private val cacheManager: WeatherCacheManager,
-    private val maxRetries: Int = 3
+    private val maxRetries: Int = 3,
+    private val apiKey: String,
+    private val baseUrl: String,
 ) : WeatherRepository {
     private val client = HttpClient(CIO) {
         install(ContentNegotiation) {
             json(Json {
                 ignoreUnknownKeys = true
                 isLenient = true
+                coerceInputValues = true
             })
         }
     }
 
     override suspend fun getWeather(city: String): Temperatures? {
-        val apiKey = "A9amWnFRSozUZG10mN0yxNB9tUTM8mU5"
-        val url = "https://api.tomorrow.io/v4/weather/forecast?location=$city&units=metric&apikey=$apiKey"
+
+        val url = "$baseUrl?location=$city&units=metric&apikey=$apiKey"
 
         return if (CacheableCities.cities.contains(city)) {
             val cachedData = cacheManager.get(city)
@@ -62,7 +65,7 @@ class ApiWeatherRepositoryImpl(
                 return weatherData
             } catch (e: Exception) {
                 println("Error fetching weather data: ${e.message}")
-                cacheManager.logError("Error_on_$city", "Error fetching weather data: ${e.message}")
+                cacheManager.logError("LOG_$city", "Error fetching weather data: ${e.message}")
                 if (currentAttempt >= maxRetries) {
                     throw RuntimeException("Failed to fetch weather data after $currentAttempt attempts", e)
                 }

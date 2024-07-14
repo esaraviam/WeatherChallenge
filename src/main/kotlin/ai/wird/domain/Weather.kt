@@ -11,8 +11,8 @@ data class Temperatures(
 data class Location(
     val lat: Double,
     val lon: Double,
-    val name: String,
-    val type: String,
+    val name: String?,
+    val type: String?,
     val isCacheable: Boolean = false,
 )
 @Serializable
@@ -23,7 +23,7 @@ data class Timelines(
 )
 @Serializable
 data class Daily(
-    val time: String,
+    val time: String?,
     val values: Values
 )
 @Serializable
@@ -58,8 +58,8 @@ data class Values(
     val iceAccumulationMax: Double,
     val iceAccumulationMin: Double,
     val iceAccumulationSum: Double,
-    val moonriseTime: String,
-    val moonsetTime: String,
+    val moonriseTime: String?,
+    val moonsetTime: String?,
     val precipitationProbabilityAvg: Double,
     val precipitationProbabilityMax: Double,
     val precipitationProbabilityMin: Double,
@@ -101,8 +101,8 @@ data class Values(
     val snowIntensityAvg: Double,
     val snowIntensityMax: Double,
     val snowIntensityMin: Double,
-    val sunriseTime: String,
-    val sunsetTime: String,
+    val sunriseTime: String?,
+    val sunsetTime: String?,
     val temperatureApparentAvg: Double,
     val temperatureApparentMax: Double,
     val temperatureApparentMin: Double,
@@ -130,6 +130,6 @@ data class Values(
 )
 @Serializable
 data class Hourly(
-    val time: String,
+    val time: String?,
     val values: Map<String, Double?>
 )
