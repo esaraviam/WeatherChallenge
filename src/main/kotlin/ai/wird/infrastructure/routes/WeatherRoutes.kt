@@ -1,5 +1,6 @@
 package ai.wird.infrastructure.routes
 
+import ai.wird.domain.CacheableCities
 import ai.wird.domain.Location
 import ai.wird.domain.WeatherResult
 import ai.wird.infrastructure.controllers.WeatherController
@@ -17,6 +18,11 @@ fun Route.weatherRoutes(weatherController: WeatherController) {
                 HttpStatusCode.BadRequest,
                 "Missing or malformed cityName"
             )
+            if(!CacheableCities.cities.contains(cityName))
+                return@get call.respond(
+                    HttpStatusCode.BadRequest,
+                    "La ciudad consultada no es parte de las ciudades criticas del servicio"
+                )
             val location = Location(0.0, 0.0, cityName, "", true)
             val weather = withContext(Dispatchers.IO) { weatherController.getWeather(location) }
             call.respondWeatherResult(weather)
